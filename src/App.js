@@ -21,6 +21,9 @@ const CardsContainer = styled.div`
 function App() {
   const [pesquisa, setPesquisa] = useState("");
   const [idFilter, setIdFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [searchOrder, setSearchOrder] = useState("");
+  const [sortingParameter, setSortingParameter] = useState("");
 
   return (
     <>
@@ -30,13 +33,39 @@ function App() {
         setIdFilter={setIdFilter}
         pesquisa={pesquisa}
         setPesquisa={setPesquisa}
+        typeFilter={typeFilter}
+        setTypeFilter={setTypeFilter}
+        searchOrder={searchOrder}
+        setSearchOrder={setSearchOrder}
+        sortingParameter={sortingParameter}
+        setSortingParameter={setSortingParameter}
       />
       <CardsContainer>
-        {pokemons.filter((pokemon) => {
-          return idFilter ? pokemon.id.includes(idFilter) : pokemon
-        })
+        {pokemons
+          .filter((pokemon) => {
+            return idFilter ? pokemon.id.includes(idFilter) : pokemon
+          })
           .filter((pokemon) => {
             return pokemon.name.english.toLowerCase().includes(pesquisa.toLowerCase());
+          })
+          .filter((pokemon) =>{
+            return typeFilter ? pokemon.type.includes(typeFilter) : pokemons
+          })
+          .sort((currentPokemon, nextPorkemon) =>{
+            switch (setSortingParameter){
+            case "id":
+              return currentPokemon.id - nextPorkemon.id
+            case "type":
+              return currentPokemon.type[0].localCompare(nextPorkemon.type[0])
+              default:
+            return currentPokemon.name.english.localeCompare(nextPorkemon.name.english)
+         }})
+          .sort(() => {
+            if (searchOrder === "crescente"){
+              return 1
+            } else{
+              return -1
+            }
           })
           .map((pokemon) => {
             return (
