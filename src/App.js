@@ -4,6 +4,8 @@ import pokemons from "./pokemon/pokemon.json";
 import PokemonCard from "./components/PokemonCard/PokemonCard";
 import { getColors } from "./utils/ReturnCardColor";
 import Header from "./components/Header/Header.js";
+
+
 const GlobalStyle = createGlobalStyle`
   *{
     padding: 0;
@@ -21,7 +23,8 @@ const CardsContainer = styled.div`
 function App() {
   const [pesquisa, setPesquisa] = useState("");
   const [idFilter, setIdFilter] = useState("");
-
+  const [filterType, setFilterType] = useState('');
+  const [filterOrder, setOrderType] = useState('');
   return (
     <>
       <GlobalStyle />
@@ -30,6 +33,10 @@ function App() {
         setIdFilter={setIdFilter}
         pesquisa={pesquisa}
         setPesquisa={setPesquisa}
+        setFilterType={setFilterType}
+        filterOrder={filterOrder} s
+        setOrderType={setOrderType}
+
       />
       <CardsContainer>
         {pokemons.filter((pokemon) => {
@@ -38,6 +45,23 @@ function App() {
           .filter((pokemon) => {
             return pokemon.name.english.toLowerCase().includes(pesquisa.toLowerCase());
           })
+
+          .filter((pokemon) => {
+            return filterType ? pokemon.type.includes(filterType) : pokemon
+          })
+
+          .sort((a,b) => {
+            if(filterOrder === "Decrescente"){
+              return a.name.english > b.name.english ? -1:1
+            } 
+            else if(filterOrder === "Crescente"){
+              return a.name.english < b.name.english ? -1:1
+            }
+            else{
+              return 0;
+            }
+            })
+
           .map((pokemon) => {
             return (
               <PokemonCard
