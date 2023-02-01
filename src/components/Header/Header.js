@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 import { Container } from "./styles";
 
@@ -31,6 +32,7 @@ const Header = (props) => {
     props.setIdFilter(e.target.value);
   };
 
+
   return (
     <Container>
         <input
@@ -45,16 +47,22 @@ const Header = (props) => {
         onChange={handleSearch}
         value={props.pesquisa}
       />
-      <select>
-        <option value="">Ordenar</option>
-        <option value="">Crescente</option>
-        <option value="">Decrescente</option>
+      <select onChange={(e) => {
+        props.setAlfabeticoFilter(e.target.value);
+      }}>
+        <option>ordenar</option>
+        <option>crescente</option>
+        <option>decrescente</option>
       </select>
       <select
         name="tipo"
         id="tipo"
+        value={props.typeFilter}
+        onChange = {(e) => {
+          props.setTypeFilter(e.target.value);
+        }}
           >
-        <option value="">Selecione um tipo</option>
+        <option>Selecione o tipo</option>
         {pokemontypesArray.map((type) => {
           return (
             <option key={type} value={type}>
