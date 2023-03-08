@@ -45,14 +45,15 @@ const Header = (props) => {
         onChange={handleSearch}
         value={props.pesquisa}
       />
-      <select>
+      <select onChange={props.onChangeOrdenar} >
         <option value="">Ordenar</option>
-        <option value="">Crescente</option>
-        <option value="">Decrescente</option>
+        <option value="crescente">Crescente</option>
+        <option value="decrescente">Decrescente</option>
       </select>
       <select
         name="tipo"
         id="tipo"
+        onChange={props.onChangeTipo}
           >
         <option value="">Selecione um tipo</option>
         {pokemontypesArray.map((type) => {
