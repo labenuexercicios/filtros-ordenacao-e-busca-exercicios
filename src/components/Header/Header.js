@@ -27,13 +27,22 @@ const Header = (props) => {
     props.setPesquisa(e.target.value);
   };
 
-   const handleIdSearch = (e) => {
+  const handleIdSearch = (e) => {
     props.setIdFilter(e.target.value);
+  };
+// criei duas funções para fazer o controle dos inputs
+
+  const handleSelect = (e) => {
+    props.setTypeSelected(e.target.value);
+  };
+  
+  const handleOrderSelected = (e) => {
+    props.setOrderSelected(e.target.value);
   };
 
   return (
     <Container>
-        <input
+      <input
         type="number"
         placeholder="Buscar por id"
         onChange={handleIdSearch}
@@ -45,24 +54,29 @@ const Header = (props) => {
         onChange={handleSearch}
         value={props.pesquisa}
       />
-      <select>
-        <option value="">Ordenar</option>
-        <option value="">Crescente</option>
-        <option value="">Decrescente</option>
-      </select>
+<select 
+  onChange={handleOrderSelected} // adicionei função no onchange 
+  value={props.orderSelected} // adicionei a variavel de estado no value
+>
+  <option value="order">Ordenar</option>
+  <option value="asc">Crescente</option>
+  <option value="desc">Decrescente</option> 
+</select>
+
       <select
         name="tipo"
         id="tipo"
-          >
+        onChange={handleSelect} // adicionei função no onchange 
+        value={props.typeSelected} // adicionei a variavel de estado no value
+      >
         <option value="">Selecione um tipo</option>
-        {pokemontypesArray.map((type) => {
-          return (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          );
-        })}
+        {pokemontypesArray.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
       </select>
+
     </Container>
   );
 };
